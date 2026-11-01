@@ -72,7 +72,44 @@ function card1(d) {
     <div style="position:relative;height:30px">${sk(0, 6, 920, 20, `<path d="M4 10 Q230 2 460 11 T916 8"/>`)}</div>
     <div style="margin-top:30px">${ings}</div>
     <div class="theme" style="font-size:32px;margin-top:46px;color:#666">テクスチャー：<span class="mark">${d.texture}</span></div>
-  </div>${bottle(d)}<div class="foot">${d.footnote}</div>`;
+  </div>${d.award ? stamp(d) : bottle(d)}<div class="foot">${d.footnote}</div>`;
+}
+
+function stamp(d) {
+  return `<div style="position:absolute;right:60px;top:530px;width:250px;height:250px;transform:rotate(8deg);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c8463d;text-align:center">
+    ${sk(0, 0, 250, 250, `<circle cx="125" cy="125" r="115" style="stroke:#c8463d"/><circle cx="125" cy="125" r="102" style="stroke:#c8463d;stroke-width:2"/>`)}
+    <div style="font-family:Yomogi;font-size:24px">${d.award.stamp_top}</div>
+    <div style="font-size:64px;font-weight:600;line-height:1.1">${d.award.stamp_main}</div>
+    <div style="font-family:Yomogi;font-size:30px">${d.award.stamp_sub}</div></div>`;
+}
+
+function cardAward(d) {
+  const a = d.award;
+  const G = '#d9a441';
+  const branch = (flip) => {
+    const leaves = [0, 1, 2, 3, 4, 5, 6].map((i) => {
+      const t = i / 6, y = 330 - t * 290, x = 70 - Math.sin(t * Math.PI) * 45;
+      return `<ellipse cx="${x - 26}" cy="${y}" rx="26" ry="11" transform="rotate(${-40 + t * 30} ${x - 26} ${y})" style="stroke:${G}"/><ellipse cx="${x + 22}" cy="${y - 14}" rx="24" ry="10" transform="rotate(${30 + t * 20} ${x + 22} ${y - 14})" style="stroke:${G}"/>`;
+    }).join('');
+    return `<g transform="${flip ? 'translate(140,0) scale(-1,1)' : ''}"><path style="stroke:${G}" d="M95 350 Q20 200 75 30"/>${leaves}</g>`;
+  };
+  const pts = (a.points || []).map((p) => `<div class="chk" style="justify-content:center;font-size:36px;margin:8px 0">${sk(0, 0, 0, 0, '')}<span style="color:${d.accent}">✓</span><span>${p}</span></div>`).join('');
+  return `<div class="pad" style="text-align:center">
+    <div class="label" style="text-align:left">AMPLE:N 成分ノート <b>No.${d.no}</b></div>
+    <div style="font-size:44px;margin-top:40px">${a.lead}</div>
+    <div style="position:relative;height:440px;margin-top:20px">
+      ${sk(120, 30, 140, 360, branch(false))}${sk(660, 30, 140, 360, branch(true))}
+      ${sk(250, 20, 420, 400, `<ellipse cx="210" cy="200" rx="195" ry="185" style="stroke:#c8463d"/><ellipse cx="210" cy="200" rx="178" ry="168" style="stroke:#c8463d;stroke-width:2"/>`)}
+      <div style="position:absolute;left:0;right:0;top:115px">
+        <div style="font-size:40px;color:#c8463d;font-family:Yomogi">${a.stamp_top}</div>
+        <div style="font-size:120px;font-weight:600;line-height:1.15"><span class="mark">${a.stamp_main}</span></div>
+        <div style="font-size:46px;color:#c8463d;font-family:Yomogi">${a.stamp_sub}</div>
+      </div>
+    </div>
+    <h1 style="font-size:58px;margin-top:20px"><span class="mark">${d.name_ja}</span></h1>
+    <div class="theme" style="font-size:34px;line-height:1.6;color:#555;margin-top:18px">${nl(a.message)}</div>
+    <div style="margin-top:26px">${pts}</div>
+  </div><div class="foot">${nl(a.note)}</div>`;
 }
 
 function card2(d) {
@@ -123,7 +160,7 @@ const roughJs = `document.querySelectorAll('.rough').forEach(el=>{const w=el.off
   fs.mkdirSync(outDir, { recursive: true });
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: W, height: H } });
-  const cards = { '1_ingredients': card1, '2_routine': card2, '3_concerns': card3 };
+  const cards = { ...(d.award ? { '0_award': cardAward } : {}), '1_ingredients': card1, '2_routine': card2, '3_concerns': card3 };
   for (const [name, fn] of Object.entries(cards)) {
     const html = path.join(outDir, `_${name}.html`);
     fs.writeFileSync(html, `<!doctype html><html><head><meta charset="utf-8"><style>${css(d)}</style></head><body>${defs}${fn(d)}<script>${roughJs}</script></body></html>`);
