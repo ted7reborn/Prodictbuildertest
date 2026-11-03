@@ -6,6 +6,7 @@ const { chromium } = require('playwright');
 const ROOT = path.resolve(__dirname, '..');
 const FONT = (f) => 'file://' + path.join(ROOT, 'assets/fonts', f);
 const W = 1080, H = 1350;
+const foot = (s) => String(s).split('　').map((x) => `<span style="white-space:nowrap">${x}</span>`).join('　');
 const nl = (s) => String(s).replace(/\n/g, '<br>');
 
 const css = (d) => `
@@ -72,7 +73,7 @@ function card1(d) {
     <div style="position:relative;height:30px">${sk(0, 6, 920, 20, `<path d="M4 10 Q230 2 460 11 T916 8"/>`)}</div>
     <div style="margin-top:30px">${ings}</div>
     <div class="theme" style="font-size:32px;margin-top:46px;color:#666">テクスチャー：<span class="mark">${d.texture}</span></div>
-  </div>${d.award ? stamp(d) : bottle(d)}<div class="foot">${d.footnote}</div>`;
+  </div>${d.award ? stamp(d) : bottle(d)}<div class="foot">${foot(d.footnote)}</div>`;
 }
 
 function stamp(d) {
@@ -135,7 +136,7 @@ function card2(d) {
       <span class="sun">☀ 朝 ${d.routine.morning ? '◎' : '△'}</span>　<span class="sun">☾ 夜 ${d.routine.night ? '◎' : '△'}</span>
       <div style="font-size:30px;color:#666;margin-top:10px">${d.routine.note}</div>
     </div>
-  </div><div class="foot">${d.footnote}</div>`;
+  </div><div class="foot">${foot(d.footnote)}</div>`;
 }
 
 function card3(d) {
@@ -149,7 +150,7 @@ function card3(d) {
       <div style="font-size:44px;font-weight:600">${d.name_ja.replace('アンプル', '')} <span style="color:${d.accent}">＋</span> ${d.pairing.with}</div>
       <div style="font-size:32px;color:#555;margin-top:12px;line-height:1.6">${nl(d.pairing.tip)}</div>
     </div>
-  </div><div class="foot">${d.footnote}</div>`;
+  </div><div class="foot">${foot(d.footnote)}</div>`;
 }
 
 const roughJs = `document.querySelectorAll('.rough').forEach(el=>{const w=el.offsetWidth,h=el.offsetHeight;const d='M6 8 Q'+w/2+' 2 '+(w-6)+' 6 Q'+(w-2)+' '+h/2+' '+(w-8)+' '+(h-6)+' Q'+w/2+' '+(h-1)+' 8 '+(h-8)+' Q3 '+h/2+' 6 8 M'+(w-30)+' 5 L'+(w-4)+' 12';el.insertAdjacentHTML('afterbegin','<svg class="sk" style="left:0;top:0" width="'+w+'" height="'+h+'"><path d="'+d+'"/></svg>')})`;
