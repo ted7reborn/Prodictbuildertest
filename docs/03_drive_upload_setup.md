@@ -7,7 +7,7 @@
 1. PC에서 https://script.google.com 접속 → **새 프로젝트**
 2. 프로젝트 이름: `AMPLE:N Drive Uploader`
 3. `Code.gs` 내용을 전부 지우고, 이 저장소의 `apps_script/Code.gs` 내용을 붙여넣기 → 저장
-4. 왼쪽 **서비스(＋)** → `Drive API` 추가 (본문을 구글 문서로 변환할 때 사용)
+4. (Drive API 추가는 이제 필요 없음)
 
 ## 2. 설정값 저장 — 코드의 setup 함수를 한 번 실행하면 자동 (아래는 수동 방법)
 왼쪽 ⚙️**프로젝트 설정** → 아래 **스크립트 속성** → 속성 추가

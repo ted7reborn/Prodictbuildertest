@@ -15,6 +15,8 @@ function setup() {
     props.setProperty('UPLOAD_TOKEN', token);
   }
   DriveApp.getFolderById(ROOT_FOLDER_ID); // 폴더 접근 권한 확인
+  var check = DocumentApp.create('권한확인용'); // 문서 작성 권한 확인
+  DriveApp.getFileById(check.getId()).setTrashed(true);
   Logger.log('설정 완료! 아래 토큰을 복사하세요 (DRIVE_UPLOAD_TOKEN):');
   Logger.log(token);
 }
@@ -33,16 +35,41 @@ function doPost(e) {
     var old = folder.getFilesByName(f.name);
     while (old.hasNext()) old.next().setTrashed(true);
     var created;
-    if (f.asGoogleDoc) {
-      var blob = Utilities.newBlob(Utilities.base64Decode(f.base64), 'text/html', f.name + '.html');
-      var file = Drive.Files.create({ name: f.name, mimeType: 'application/vnd.google-apps.document', parents: [folder.getId()] }, blob);
-      created = DriveApp.getFileById(file.id);
+    if (f.docText !== undefined) {
+      created = makeDoc_(folder, f.name, f.docText);
     } else {
       created = folder.createFile(Utilities.newBlob(Utilities.base64Decode(f.base64), f.mimeType, f.name));
     }
     results.push({ name: f.name, id: created.getId(), url: created.getUrl() });
   });
   return json_({ ok: true, folderUrl: folder.getUrl(), files: results });
+}
+
+// 원고 텍스트(# 제목, **굵게**)를 구글 문서로 만들기 — Drive API 불필요
+function makeDoc_(folder, name, text) {
+  var doc = DocumentApp.create(name);
+  var body = doc.getBody();
+  body.clear();
+  text.split('\n').forEach(function (line) {
+    var heading = line.indexOf('# ') === 0;
+    if (heading) line = line.substring(2);
+    var plain = '', bolds = [], re = /\*\*(.+?)\*\*/g, last = 0, m;
+    while ((m = re.exec(line)) !== null) {
+      plain += line.substring(last, m.index);
+      bolds.push([plain.length, plain.length + m[1].length - 1]);
+      plain += m[1];
+      last = m.index + m[0].length;
+    }
+    plain += line.substring(last);
+    var p = body.appendParagraph(plain);
+    if (heading) p.setHeading(DocumentApp.ParagraphHeading.HEADING2);
+    var t = p.editAsText();
+    bolds.forEach(function (b) { if (b[1] >= b[0]) t.setBold(b[0], b[1], true); });
+  });
+  doc.saveAndClose();
+  var file = DriveApp.getFileById(doc.getId());
+  file.moveTo(folder);
+  return file;
 }
 
 function child_(parent, name) {

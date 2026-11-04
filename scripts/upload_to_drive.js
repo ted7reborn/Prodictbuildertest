@@ -9,8 +9,8 @@ const path = require('path');
   if (!url || !token) throw new Error('DRIVE_UPLOAD_URL / DRIVE_UPLOAD_TOKEN 환경변수가 없습니다');
   const b64 = (p) => fs.readFileSync(p).toString('base64');
   const files = [];
-  const html = path.join(postDir, 'post.html');
-  if (fs.existsSync(html)) files.push({ name: `${folderName}_本文（コピペ用）`, asGoogleDoc: true, base64: b64(html) });
+  const md = path.join(postDir, 'post.md');
+  if (fs.existsSync(md)) files.push({ name: `${folderName}_本文（コピペ用）`, docText: fs.readFileSync(md, 'utf8') });
   const imgDir = path.join(postDir, 'images');
   for (const f of fs.readdirSync(imgDir).filter((f) => f.endsWith('.png')).sort()) {
     files.push({ name: f, mimeType: 'image/png', base64: b64(path.join(imgDir, f)) });
