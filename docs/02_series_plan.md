@@ -25,20 +25,26 @@
 | 01 | ヒアルロンショット水分アンプル | [amp0006](https://item.rakuten.co.jp/coreana/amp0006/) | 샘플 완료 |
 | 02 | ペプチドショットアンプル2X（楽天1位・4冠） | [amp0003](https://item.rakuten.co.jp/coreana/amp0003/) | 샘플 완료 (수상 注記 대기) |
 | 03 | セラミドショットアンプル | [amp0004](https://item.rakuten.co.jp/coreana/amp0004/) | 샘플 완료 |
-| 04 | ハイパーショット セラミド | [amphp03](https://item.rakuten.co.jp/coreana/amphp03/) | |
-| 05 | VCショットアンプル | [amp0005](https://item.rakuten.co.jp/coreana/amp0005/) | |
-| 06 | ブレミショットアンプル | [amp0001](https://item.rakuten.co.jp/coreana/amp0001/) | |
-| 07 | ハイパーショット ペプチド | [amphp01](https://item.rakuten.co.jp/coreana/amphp01/) | |
-| 08 | エンタングルショットアンプル | [amp0002](https://item.rakuten.co.jp/coreana/amp0002/) | |
-| 09 | アクネショットアンプル | [amp0009](https://item.rakuten.co.jp/coreana/amp0009/) | |
-| 10 | ハイパーショット シカPDRN | [amphp02](https://item.rakuten.co.jp/coreana/amphp02/) | |
-| 11~ | センテルカーミング / 24Kゴールド / ピーリング | 공식점 상품 미확인 | 링크처 결정 필요 |
+| 04 | ハイパーショット セラミド | [amphp03](https://item.rakuten.co.jp/coreana/amphp03/) | 초안 완료 (드라이브 업로드) |
+| 05 | VCショットアンプル | [amp0005](https://item.rakuten.co.jp/coreana/amp0005/) | 초안 완료 (드라이브 업로드) |
+| 06 | ブレミショットアンプル | [amp0001](https://item.rakuten.co.jp/coreana/amp0001/) | 초안 완료 (드라이브 업로드) |
+| 07 | ハイパーショット ペプチド | [amphp01](https://item.rakuten.co.jp/coreana/amphp01/) | 초안 완료 (드라이브 업로드) |
+| 08 | エンタングルショットアンプル | [amp0002](https://item.rakuten.co.jp/coreana/amp0002/) | 초안 완료 (드라이브 업로드) |
+| 09 | アクネショットアンプル | [amp0009](https://item.rakuten.co.jp/coreana/amp0009/) | 초안 완료 (드라이브 업로드) |
+| 10 | ハイパーショット シカPDRN | [amphp02](https://item.rakuten.co.jp/coreana/amphp02/) | 초안 완료 (드라이브 업로드) |
+| 11 | センテルカーミングショットアンプル | 공식점 상품 미확인 `{{RAKUTEN_LINK_CENTEL}}` | 초안 완료 (링크처 결정 필요) |
+| 12 | 24Kゴールドショットアンプル | 공식점 상품 미확인 `{{RAKUTEN_LINK_GOLD}}` | 초안 완료 (링크처 결정 필요) |
+| 13 | ピーリングショットアンプル | 공식점 상품 미확인 `{{RAKUTEN_LINK_PEELING}}` | 초안 완료 (링크처·일본 판매 여부 확인 필요) |
 | SP | 고민별 조합 루틴 / 트라이얼 키트([amp0025](https://item.rakuten.co.jp/coreana/amp0025/)) | | |
 
 ## 성분 검증 (라쿠텐 공식점 전성분 기준, 2026-11-03)
 - 01 ヒアルロン: ヒアルロン酸Na・ヒアルロン酸 / キシリチルグルコシド・無水キシリトール・キシリトール / セラミド3 ✅
 - 02 ペプチド2X: トリフルオロアセチルトリペプチド-2, パルミトイルトリペプチド-5, アセチルテトラペプチド-2, トリペプチド-1銅 등 / アカメガシワ樹皮エキス ✅ / 20倍=공식점 「従来アンプル比」 표기
 - 03 セラミド: セラミドNP・NS・EOP / ナイアシンアミド / β-グルカン / キシリトール系 ✅
+
+## 성분 출처 (04~13, 2026-11-04)
+- 일본 별도 처방 없음 → 코리아나몰(한국) 상품고시 전성분을 일본 표시명으로 변환해 사용. 회차별 출처 URL은 `output/posts/xx/CHECKLIST.md`
+- 한국 상세페이지의 미백·주름개선·진정·리프팅·시술 후 표현, 한국 수상 이력은 일본 블로그에 쓰지 않음 (薬機法 화장품 56항목 범위로 대체)
 
 ## 남은 결정
 - 라쿠텐 링크 방침 (공식 블로그 × 개인 어필리에이트 → 사내 승인 필요)

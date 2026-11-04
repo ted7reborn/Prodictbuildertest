@@ -54,7 +54,7 @@ function buildMarkdown(d) {
   L.push(...H('今日のまとめ'), ...d.summary.map((s) => '💧 ' + s), '');
   L.push(`▼${d.name_ja}はこちら（コリアナコスメティックス公式店）`, link.url, '');
   if (d.next) L.push(`次回の成分ノートNo.${String(Number(d.no) + 1).padStart(2, '0')}は`, `**「${d.next}」**をご紹介予定です。`, 'お楽しみに🌿', '');
-  L.push('AMPLE:N公式スタッフ', '', ...(d.award ? d.award.note.split('\n').filter((n) => !d.footnote.includes(n.replace('※', ''))) : []), ...d.footnote.split('　'), '※肌に合わない場合はご使用をおやめください。');
+  L.push('AMPLE:N公式スタッフ', '', ...(d.award ? d.award.note.split('\n').filter((n) => !d.footnote.includes(n.replace('※', ''))) : []), ...d.footnote.split('　'), ...(d.cautions || []), '※肌に合わない場合はご使用をおやめください。');
   return safe(L.join('\n'));
 }
 

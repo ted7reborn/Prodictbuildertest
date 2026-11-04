@@ -25,12 +25,12 @@ h1{font-size:78px;font-weight:600;line-height:1.25;margin-top:18px}
 .theme{font-size:40px;margin-top:22px}
 .sk{position:absolute;pointer-events:none;overflow:visible}
 .sk path,.sk circle,.sk rect,.sk line,.sk ellipse{fill:none;stroke:#444;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:url(#rough)}
-.ing{display:flex;align-items:flex-start;gap:26px;margin-top:34px}
+.ing{display:flex;align-items:flex-start;gap:26px;margin-top:28px}
 .num{flex:0 0 76px;height:76px;position:relative;font-family:Yomogi;font-size:44px;color:${d.accent};display:flex;align-items:center;justify-content:center}
 .ing h3{font-size:46px;font-weight:600;line-height:1.25}
 .tag{display:inline-block;font-family:Yomogi;font-size:24px;color:${d.accent};border:2.5px solid ${d.accent};border-radius:30px 26px 32px 24px;padding:2px 16px;margin-left:12px;vertical-align:middle;transform:rotate(-2deg)}
 .ing p{font-size:31px;line-height:1.6;color:#555;margin-top:8px;font-weight:400}
-.foot{position:absolute;left:80px;right:80px;bottom:46px;font-family:Yomogi;font-size:22px;color:#999;line-height:1.5}
+.foot{position:absolute;left:80px;right:80px;bottom:40px;font-family:Yomogi;font-size:19px;color:#999;line-height:1.45}
 .brand{position:absolute;right:80px;bottom:90px;font-family:Yomogi;font-size:30px;color:#bbb;letter-spacing:3px}
 .step{display:flex;align-items:center;gap:28px;height:118px;position:relative;padding-left:20px}
 .step .t{font-size:42px;font-weight:600}
@@ -54,11 +54,22 @@ const roughRect = (w, h, color = '#444') =>
 
 const doodles = {
   drop: (c) => `<path style="stroke:${c}" d="M60 10 C40 50 18 75 18 102 a42 42 0 0 0 84 0 C102 75 80 50 60 10Z"/><path d="M40 100 q2 18 18 24"/>`,
+  leaf: (c) => `<path style="stroke:${c}" d="M20 130 C20 60 70 20 110 14 C112 70 80 120 20 130Z"/><path d="M22 128 Q60 80 100 28"/>`,
+  sparkle: (c) => `<path style="stroke:${c}" d="M60 10 Q66 54 110 62 Q66 70 60 116 Q54 70 10 62 Q54 54 60 10Z"/><path d="M98 14 v18 M89 23 h18"/>`,
   ampoule: () => `<path d="M48 8 h24 v26 h-24z"/><path d="M44 34 h32 l6 14 v100 q0 10 -10 10 h-24 q-10 0 -10 -10 v-100z"/><path d="M50 80 h20 M50 92 h14"/>`,
 };
 
 function bottle(d) {
   return sk(880, 560, 140, 180, doodles.ampoule()) + sk(840, 760, 120, 150, doodles[d.doodle] ? doodles[d.doodle](d.accent) : '');
+}
+
+// long names: break at the space (ハイパーショット / セラミド) and shrink so words never split mid-line
+function title(d) {
+  const base = d.name_ja.replace('アンプル', '');
+  const lines = base.split(' ');
+  const longest = Math.max(...lines.map((l) => l.length));
+  const fs = longest > 11 ? 62 : longest > 9 ? 70 : 78;
+  return `<span class="mark" style="font-size:${fs}px">${lines.join('<br>')}</span><br><span style="font-size:60px">アンプル</span>`;
 }
 
 function card1(d) {
@@ -67,7 +78,7 @@ function card1(d) {
     <div><h3>${nl(g.name)}<span class="tag">${g.tag}</span></h3><p>${nl(g.desc)}</p></div></div>`).join('');
   return `<div class="pad">
     <div class="label">AMPLE:N 成分ノート <b>No.${d.no}</b></div>
-    <h1><span class="mark">${d.name_ja.replace('アンプル', '</span><br><span style="font-size:60px">アンプル</span>')}</h1>
+    <h1>${title(d)}</h1>
     <div class="en">${d.name_en}</div>
     <div class="theme">${d.theme}</div>
     <div style="position:relative;height:30px">${sk(0, 6, 920, 20, `<path d="M4 10 Q230 2 460 11 T916 8"/>`)}</div>
@@ -147,7 +158,7 @@ function card3(d) {
     <div class="box rough">${items}</div>
     <div class="theme" style="font-size:40px;margin-top:56px">組み合わせるなら…</div>
     <div class="box" style="margin-top:16px;background:${d.color_soft};border-radius:36px 30px 40px 28px">
-      <div style="font-size:44px;font-weight:600">${d.name_ja.replace('アンプル', '')} <span style="color:${d.accent}">＋</span> ${d.pairing.with}</div>
+      <div style="font-size:${(d.name_ja + d.pairing.with).length > 22 ? 38 : 44}px;font-weight:600"><span style="white-space:nowrap">${d.name_ja.replace('アンプル', '')}</span> <span style="color:${d.accent}">＋</span> <span style="white-space:nowrap">${d.pairing.with}</span></div>
       <div style="font-size:32px;color:#555;margin-top:12px;line-height:1.6">${nl(d.pairing.tip)}</div>
     </div>
   </div><div class="foot">${foot(d.footnote)}</div>`;
